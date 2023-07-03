@@ -64,8 +64,12 @@ class AccessorTest extends TestCase
         ], $result);
         $result = $accessor->get($subject, 'object-val/string-val-3', 'The default');
         $this->assertEquals('Yet another string', $result);
+        $result = $accessor->get($subject, 'object-val/non-existing', 'The default');
+        $this->assertEquals('The default', $result);
         $result = $accessor->get($subject, 'object-val/null-val-3', 'The default');
         $this->assertNull($result);
+        $result = $accessor->get(null, 'non-existing', 'The default');
+        $this->assertEquals('The default', $result);
     }
 
     public function testHas(): void
@@ -95,6 +99,8 @@ class AccessorTest extends TestCase
         $this->assertTrue($accessor->has($subject, 'object-val/string-val-3'));
         $this->assertFalse($accessor->has($subject, 'non-existing'));
         $this->assertFalse($accessor->has($subject, 'assoc-array-val/non-existing'));
+        $this->assertFalse($accessor->has($subject, 'object-val/non-existing'));
         $this->assertFalse($accessor->has($subject, 'num-array-val/3'));
+        $this->assertFalse($accessor->has(null, 'non-existing'));
     }
 }
