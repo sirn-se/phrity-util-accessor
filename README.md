@@ -1,5 +1,5 @@
-[![Build Status](https://github.com/sirn-se/util-accessor/actions/workflows/acceptance.yml/badge.svg)](https://github.com/sirn-se/util-accessor/actions)
-[![Coverage Status](https://coveralls.io/repos/github/sirn-se/util-accessor/badge.svg?branch=main)](https://coveralls.io/github/sirn-se/util-accessor?branch=main)
+[![Build Status](https://github.com/sirn-se/phrity-util-accessor/actions/workflows/acceptance.yml/badge.svg)](https://github.com/sirn-se/phrity-util-accessor/actions)
+[![Coverage Status](https://coveralls.io/repos/github/sirn-se/phrity-util-accessor/badge.svg?branch=main)](https://coveralls.io/github/sirn-se/phrity-util-accessor?branch=main)
 
 # Introduction
 

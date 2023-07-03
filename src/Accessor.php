@@ -10,7 +10,7 @@ class Accessor
     /**
      * @var string $separator Separator
      */
-    private $separator;
+    protected $separator;
 
     /**
      * Constructor for this class.
@@ -48,7 +48,14 @@ class Accessor
         }));
     }
 
-    private function accessorGet($data, array $path, $default)
+    /**
+     * Recursive worker function for get() operation.
+     * @param mixed $data Data set to access
+     * @param string $path Path to access
+     * @param mixed $default Default value
+     * @return mixed Specified content of data set
+     */
+    protected function accessorGet($data, array $path, $default)
     {
         if (empty($path)) {
             return $data; // Bottom case
@@ -69,7 +76,13 @@ class Accessor
         return $default; // No match
     }
 
-    private function accessorHas($data, array $path): bool
+    /**
+     * Recursive worker function for has() operation.
+     * @param mixed $data Data set to access
+     * @param string $path Path to access
+     * @return bool If speciefied content is present
+     */
+    protected function accessorHas($data, array $path): bool
     {
         if (empty($path)) {
             return true; // Bottom case
