@@ -10,14 +10,14 @@ class PathAccessor
     use AccessorTrait;
 
     /**
-     * @var string $separator Separator
-     */
-    protected $separator;
-
-    /**
      * @var string $path Path
      */
     protected $path;
+
+    /**
+     * @var string $separator Separator
+     */
+    protected $separator;
 
     /**
      * Constructor for this class.

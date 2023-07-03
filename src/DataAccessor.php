@@ -10,14 +10,14 @@ class DataAccessor
     use AccessorTrait;
 
     /**
-     * @var string $separator Separator
-     */
-    protected $separator;
-
-    /**
      * @var mixed $data Data set
      */
     protected $data;
+
+    /**
+     * @var string $separator Separator
+     */
+    protected $separator;
 
     /**
      * Constructor for this class.

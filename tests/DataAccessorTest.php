@@ -27,7 +27,7 @@ class DataAccessorTest extends TestCase
         $this->assertEquals('Yet another string', $result);
     }
 
-    public function ctestHas(): void
+    public function testHas(): void
     {
         $subject = [
             'string-val' => 'A string',
