@@ -130,6 +130,32 @@ $accessor->get('object-val/string-val'); // => "A string"
 $accessor->get('object-val/int-val'); // => 23
 ```
 
+## I want to incorporate this in my own class
+
+Sure, no problem. Just use the `AccessorTrait` in your class, and call the available worker methods.
+The internal, recursive worker methods takes path as an array of path segments.
+There is also a helper to extract array path from a string path.
+
+```php
+
+use Phrity\Util\AccessorTrait;
+
+class MyClass
+{
+    use AccessorTrait;
+
+    public function doThings(): void
+    {
+        $my_data = ['array-val' => ['string-val' => 'A string']];
+        $exists = $this->accessorHas($my_data, ['array-val', 'string-val']);
+        $something = $this->accessorGet($my_data, ['array-val', 'string-val'], 'My default');
+
+        $my_path = $this->accessorParsePath('array-val#string-val', '#');
+        $exists = $this->accessorHas($my_data, $my_path);
+        $something = $this->accessorGet($my_data, $my_path, 'My default');
+    }
+}
+```
 
 # Versions
 
