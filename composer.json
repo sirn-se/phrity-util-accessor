@@ -1,7 +1,7 @@
 {
     "name": "phrity/util-accessor",
     "type": "library",
-    "description": "",
+    "description": "Utility to handle access to a data set by using access paths.",
     "homepage": "https://phrity.sirn.se/util-accessor",
     "keywords": [],
     "license": "MIT",
