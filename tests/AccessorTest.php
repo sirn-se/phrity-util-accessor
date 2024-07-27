@@ -103,4 +103,19 @@ class AccessorTest extends TestCase
         $this->assertFalse($accessor->has($subject, 'num-array-val/3'));
         $this->assertFalse($accessor->has(null, 'non-existing'));
     }
+
+    public function testObject(): void
+    {
+        $subject = new TestObject();
+        $accessor = new Accessor();
+
+        $this->assertTrue($accessor->has($subject, ''));
+        $this->assertInstanceOf(TestObject::class, $accessor->get($subject, ''));
+        $this->assertTrue($accessor->has($subject, 'public'));
+        $this->assertEquals('public', $accessor->get($subject, 'public'));
+        $this->assertFalse($accessor->has($subject, 'protected'));
+        $this->assertNull($accessor->get($subject, 'protected'));
+        $this->assertFalse($accessor->has($subject, 'private'));
+        $this->assertNull($accessor->get($subject, 'private'));
+    }
 }

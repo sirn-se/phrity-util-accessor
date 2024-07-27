@@ -36,7 +36,7 @@ class PathAccessor
      * @param mixed $default Default value
      * @return mixed Specified content of data set
      */
-    public function get($data, $default = null)
+    public function get(mixed $data, $default = null): mixed
     {
         return $this->accessorGet($data, $this->accessorParsePath($this->path, $this->separator), $default);
     }
@@ -46,7 +46,7 @@ class PathAccessor
      * @param mixed $data Data set to access
      * @return bool If speciefied content is present
      */
-    public function has($data): bool
+    public function has(mixed $data): bool
     {
         return $this->accessorHas($data, $this->accessorParsePath($this->path, $this->separator));
     }
