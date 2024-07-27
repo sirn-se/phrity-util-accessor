@@ -31,4 +31,13 @@ class PathAccessorTest extends TestCase
         $subject_2 = ['string-val' => 'Another string'];
         $this->assertTrue($accessor->has($subject_2, 'string-val'));
     }
+
+    public function testObject(): void
+    {
+        $subject = new TestObject();
+        $accessor = new PathAccessor('public');
+
+        $this->assertTrue($accessor->has($subject));
+        $this->assertEquals('public', $accessor->get($subject));
+    }
 }

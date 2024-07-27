@@ -24,7 +24,7 @@ class DataAccessor
      * @param mixed $data Data set to access
      * @param string $separator Separator
      */
-    public function __construct($data, string $separator = '/')
+    public function __construct(mixed $data, string $separator = '/')
     {
         $this->data = $data;
         $this->separator = $separator;
@@ -36,7 +36,7 @@ class DataAccessor
      * @param mixed $default Default value
      * @return mixed Specified content of data set
      */
-    public function get(string $path, $default = null)
+    public function get(string $path, mixed $default = null): mixed
     {
         return $this->accessorGet($this->data, $this->accessorParsePath($path, $this->separator), $default);
     }

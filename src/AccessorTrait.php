@@ -14,21 +14,16 @@ trait AccessorTrait
      * @param mixed $default Default value
      * @return mixed Specified content of data set
      */
-    private function accessorGet($data, array $path, $default)
+    private function accessorGet(mixed $data, array $path, mixed $default): mixed
     {
         if (empty($path)) {
             return $data; // Bottom case
         }
         $current = array_shift($path);
+        $data = is_object($data) ? get_object_vars($data) : $data;
         if (is_array($data)) {
             if (array_key_exists($current, $data)) {
                 return $this->accessorGet($data[$current], $path, $default);
-            }
-            return $default; // No match
-        }
-        if (is_object($data)) {
-            if (property_exists($data, $current)) {
-                return $this->accessorGet($data->$current, $path, $default);
             }
             return $default; // No match
         }
@@ -41,21 +36,16 @@ trait AccessorTrait
      * @param string $path Path to access
      * @return bool If speciefied content is present
      */
-    private function accessorHas($data, array $path): bool
+    private function accessorHas(mixed $data, array $path): bool
     {
         if (empty($path)) {
             return true; // Bottom case
         }
         $current = array_shift($path);
+        $data = is_object($data) ? get_object_vars($data) : $data;
         if (is_array($data)) {
             if (array_key_exists($current, $data)) {
                 return $this->accessorHas($data[$current], $path);
-            }
-            return false; // No match
-        }
-        if (is_object($data)) {
-            if (property_exists($data, $current)) {
-                return $this->accessorHas($data->$current, $path);
             }
             return false; // No match
         }

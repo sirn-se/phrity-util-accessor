@@ -39,4 +39,19 @@ class DataAccessorTest extends TestCase
         $this->assertTrue($accessor->has('string-val', 'string-val'));
         $this->assertTrue($accessor->has('object-val/string-val-2', 'string-val'));
     }
+
+    public function testObject(): void
+    {
+        $subject = new TestObject();
+        $accessor = new DataAccessor($subject);
+
+        $this->assertTrue($accessor->has(''));
+        $this->assertInstanceOf(TestObject::class, $accessor->get(''));
+        $this->assertTrue($accessor->has('public'));
+        $this->assertEquals('public', $accessor->get('public'));
+        $this->assertFalse($accessor->has('protected'));
+        $this->assertNull($accessor->get('protected'));
+        $this->assertFalse($accessor->has('private'));
+        $this->assertNull($accessor->get('private'));
+    }
 }
