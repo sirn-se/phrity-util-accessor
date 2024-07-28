@@ -40,6 +40,15 @@ class DataAccessorTest extends TestCase
         $this->assertTrue($accessor->has('object-val/string-val-2', 'string-val'));
     }
 
+    public function testSet(): void
+    {
+        $subject = ['string-val' => 'A string', 'null-val' => null];
+        $accessor = new DataAccessor($subject);
+
+        $result = $accessor->set('string-val', 'New string');
+        $this->assertEquals(['string-val' => 'New string', 'null-val' => null], $result);
+    }
+
     public function testObject(): void
     {
         $subject = new TestObject();
@@ -53,5 +62,9 @@ class DataAccessorTest extends TestCase
         $this->assertNull($accessor->get('protected'));
         $this->assertFalse($accessor->has('private'));
         $this->assertNull($accessor->get('private'));
+
+        $clone = $accessor->set('public', 'Changed public');
+        $this->assertNotSame($subject, $clone);
+        $this->assertEquals('Changed public', $clone->public);
     }
 }
