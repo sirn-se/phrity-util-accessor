@@ -6,6 +6,7 @@ namespace Phrity\Util\Test;
 
 use PHPUnit\Framework\TestCase;
 use Phrity\Util\Accessor;
+use Phrity\Util\AccessorException;
 
 /**
  * Accessor test class.
@@ -104,11 +105,47 @@ class AccessorTest extends TestCase
         $this->assertFalse($accessor->has(null, 'non-existing'));
     }
 
+    public function testSet(): void
+    {
+        $accessor = new Accessor();
+
+        $subject = ['string-val' => 'A string'];
+        $result = $accessor->set($subject, '', [1, 2, 3]);
+        $this->assertEquals([1, 2, 3], $result);
+        $result = $accessor->set($subject, 'string-val', 'Changed string');
+        $this->assertEquals(['string-val' => 'Changed string'], $result);
+        $result = $accessor->set($subject, 'non-existing', 'New string');
+        $this->assertEquals(['string-val' => 'A string', 'non-existing' => 'New string'], $result);
+
+        $subject = ['assoc-array-val' => ['string-val' => 'A string', 'null-val' => null]];
+        $result = $accessor->set($subject, 'assoc-array-val/string-val', 'Changed string');
+        $this->assertEquals(['assoc-array-val' => ['string-val' => 'Changed string', 'null-val' => null]], $result);
+        $result = $accessor->set($subject, 'assoc-array-val/non-existing', 'New string');
+        $this->assertEquals([
+            'assoc-array-val' => ['string-val' => 'A string', 'non-existing' => 'New string', 'null-val' => null]
+        ], $result);
+
+        $subject = ['object-val' => (object)['string-val' => 'A string', 'null-val' => null]];
+        $result = $accessor->set($subject, 'object-val/string-val', 'Changed string');
+        $this->assertEquals(['object-val' => (object)['string-val' => 'Changed string', 'null-val' => null]], $result);
+        $result = $accessor->set($subject, 'object-val/non-existing', 'New string');
+        $this->assertEquals([
+            'object-val' => (object)['string-val' => 'A string', 'non-existing' => 'New string', 'null-val' => null]
+        ], $result);
+
+        $subject = [];
+        $result = $accessor->set($subject, 'a/b/c', ['d' => ['e' => ['f' => 'ok']]]);
+        $this->assertEquals(['a' => ['b' => ['c' => ['d' => ['e' => ['f' => 'ok']]]]]], $result);
+
+        $subject = ['a' => 'A string'];
+        $result = $accessor->set($subject, 'a/b', 'Changed type');
+        $this->assertEquals(['a' => ['b' => 'Changed type']], $result);
+    }
+
     public function testObject(): void
     {
         $subject = new TestObject();
         $accessor = new Accessor();
-
         $this->assertTrue($accessor->has($subject, ''));
         $this->assertInstanceOf(TestObject::class, $accessor->get($subject, ''));
         $this->assertTrue($accessor->has($subject, 'public'));
@@ -117,5 +154,27 @@ class AccessorTest extends TestCase
         $this->assertNull($accessor->get($subject, 'protected'));
         $this->assertFalse($accessor->has($subject, 'private'));
         $this->assertNull($accessor->get($subject, 'private'));
+
+        $clone = $accessor->set($subject, 'public', 'Changed public');
+        $this->assertNotSame($subject, $clone);
+        $this->assertEquals('Changed public', $clone->public);
+    }
+
+    public function testObjectDynamicPropertyError(): void
+    {
+        $subject = new TestObject();
+        $accessor = new Accessor();
+        $this->expectException(AccessorException::class);
+        $this->expectExceptionMessage("Can not set property 'created' on Phrity\Util\Test\TestObject");
+        $clone = $accessor->set($subject, 'created', 'New string');
+    }
+
+    public function testObjectNonPublicPropertyError(): void
+    {
+        $subject = new TestObject();
+        $accessor = new Accessor();
+        $this->expectException(AccessorException::class);
+        $this->expectExceptionMessage("Can not set property 'protected' on Phrity\Util\Test\TestObject");
+        $clone = $accessor->set($subject, 'protected', 'New string');
     }
 }

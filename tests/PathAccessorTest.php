@@ -32,6 +32,15 @@ class PathAccessorTest extends TestCase
         $this->assertTrue($accessor->has($subject_2, 'string-val'));
     }
 
+    public function testSet(): void
+    {
+        $accessor = new PathAccessor('string-val');
+        $subject = ['string-val' => 'A string', 'null-val' => null];
+
+        $result = $accessor->set($subject, 'New string');
+        $this->assertEquals(['string-val' => 'New string', 'null-val' => null], $result);
+    }
+
     public function testObject(): void
     {
         $subject = new TestObject();
@@ -39,5 +48,9 @@ class PathAccessorTest extends TestCase
 
         $this->assertTrue($accessor->has($subject));
         $this->assertEquals('public', $accessor->get($subject));
+
+        $clone = $accessor->set($subject, 'Changed public');
+        $this->assertNotSame($subject, $clone);
+        $this->assertEquals('Changed public', $clone->public);
     }
 }

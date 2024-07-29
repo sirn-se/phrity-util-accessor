@@ -50,4 +50,15 @@ class DataAccessor
     {
         return $this->accessorHas($this->data, $this->accessorParsePath($path, $this->separator));
     }
+
+    /**
+     * Set specified content on data set.
+     * @param string $path Path to access
+     * @param mixed $value Value to set
+     * @return mixed Modified data set
+     */
+    public function set(string $path, mixed $value): mixed
+    {
+        return $this->accessorSet($this->data, $this->accessorParsePath($path, $this->separator), $value);
+    }
 }

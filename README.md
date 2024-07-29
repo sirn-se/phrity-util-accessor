@@ -14,7 +14,7 @@ composer require phrity/util-accessor
 
 # How to use
 
-## Basic operation get() and has() methods
+## Basic operation `get()` and `has()` methods
 
 Any set of data (including arrays, objects, and scalar values) can be access using a path.
 
@@ -46,10 +46,10 @@ $accessor->has($subject, 'assoc-array-val/string-val'); // => true
 $accessor->has($subject, 'assoc-array-val/non-exising'); // => false
 ```
 
-## Using default return value for get() method
+## Using default return value for `get()` method
 
-The get() method can also have default value specified, to be returned when path do not match the data set.
-If not specified, null will be returned in these cases.
+The `get()` method can also have default value specified, to be returned when path do not match the data set.
+If not specified, `null` will be returned in these cases.
 
 ```php
 use Phrity\Util\Accessor;
@@ -62,6 +62,28 @@ $accessor = new Accessor();
 
 $accessor->get($subject, 'non-existing'); // => null
 $accessor->get($subject, 'non-existing', 'My default'); // => "My default"
+```
+
+## The `set()` method
+
+The `set()` method add or replace value in data set as specified by path.
+Note that this operation do not merge values, but set explicitly.
+
+Depending on scope, it may not be possible to use `set()` on class properties.
+In this case an `AccessorException` will be thrown.
+
+```php
+use Phrity\Util\Accessor;
+
+$subject = [
+    'string-val' => 'A string',
+];
+
+$accessor = new Accessor();
+
+$subject = $accessor->set($subject, 'string-val', 'Replaced value');
+$subject = $accessor->set($subject, 'non-existing', 'Added value');
+// $subject => ['string-val' => 'Replaced value', 'non-existing' => 'Added value']
 ```
 
 ## Specifying path separator
@@ -86,7 +108,7 @@ $accessor->has($subject, 'object-val.string-val'); // => true
 ## The PathAccessor
 
 If multiple data sets should be accessed using the same path, the PathAccessor can be used instead.
-The path is then specified on constructor, and then used on all calls to get() and has().
+The path is then specified on constructor, and then used on all calls to `get()`, `has()` and `set()`.
 
 ```php
 use Phrity\Util\PathAccessor;
@@ -106,12 +128,14 @@ $accessor = new PathAccessor('object-val/string-val');
 
 $accessor->get($subject_1); // => "A string"
 $accessor->get($subject_2); // => "Another string"
+$subject_1 = $accessor->set($subject_1, 'Replaced value');
+$subject_2 = $accessor->set($subject_2, 'Replaced value');
 ```
 
 ## The DataAccessor
 
 If a data sets should be accessed using multiple paths, the DataAccessor can be used instead.
-The data is then specified on constructor, and then used on all calls to get() and has().
+The data is then specified on constructor, and then used on all calls to `get()`, `has()` and `set()`.
 
 ```php
 use Phrity\Util\DataAccessor;
@@ -128,6 +152,8 @@ $accessor = new DataAccessor(subject);
 
 $accessor->get('object-val/string-val'); // => "A string"
 $accessor->get('object-val/int-val'); // => 23
+$accessor->set('object-val/string-val', 'Replaced string');
+$accessor->set('object-val/int-val', 48);
 ```
 
 ## I want to incorporate this in my own class
@@ -153,6 +179,7 @@ class MyClass
         $my_path = $this->accessorParsePath('array-val#string-val', '#');
         $exists = $this->accessorHas($my_data, $my_path);
         $something = $this->accessorGet($my_data, $my_path, 'My default');
+        $modified = $this->accessorSet($my_data, $my_path, 'My new value');
     }
 }
 ```
@@ -161,4 +188,5 @@ class MyClass
 
 | Version | PHP | |
 | --- | --- | --- |
-| `1.0` | `^7.4\|^8.0` | Initial version: get(), has() |
+| `1.1` | `^8.0` | `set()` method |
+| `1.0` | `^7.4\|^8.0` | Initial version: `get()`, `has()` methods |
