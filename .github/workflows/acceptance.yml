@@ -7,7 +7,7 @@ jobs:
   test:
     strategy:
       matrix:
-        php-versions: ["8.0", "8.1", "8.2", "8.3", "8.4"]
+        php-versions: ["8.1", "8.2", "8.3", "8.4", "8.5"]
     runs-on: ubuntu-latest
     name: Unit test
     steps:
@@ -43,7 +43,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: "8.3"
+        php-version: "8.4"
         coverage: none
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -59,7 +59,7 @@ jobs:
     - name: Install dependencies
       run: composer install --prefer-dist
     - name: Code standard
-      run: vendor/bin/phpcs --standard=PSR1,PSR12 --encoding=UTF-8 --report=full --colors src tests
+      run: vendor/bin/phpcs
 
   coverage:
     runs-on: ubuntu-latest
@@ -70,7 +70,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@v2
       with:
-        php-version: "8.3"
+        php-version: "8.4"
         coverage: xdebug
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

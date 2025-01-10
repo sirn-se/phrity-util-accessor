@@ -12,12 +12,12 @@ class PathAccessor
     /**
      * @var string $path Path
      */
-    protected $path;
+    protected string $path;
 
     /**
      * @var string $separator Separator
      */
-    protected $separator;
+    protected string $separator;
 
     /**
      * Constructor for this class.
@@ -36,7 +36,7 @@ class PathAccessor
      * @param mixed $default Default value
      * @return mixed Specified content of data set
      */
-    public function get(mixed $data, $default = null): mixed
+    public function get(mixed $data, mixed $default = null): mixed
     {
         return $this->accessorGet($data, $this->accessorParsePath($this->path, $this->separator), $default);
     }
