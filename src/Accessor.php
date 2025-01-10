@@ -12,7 +12,7 @@ class Accessor
     /**
      * @var string $separator Separator
      */
-    protected $separator;
+    protected string $separator;
 
     /**
      * Constructor for this class.

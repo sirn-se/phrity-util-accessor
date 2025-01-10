@@ -46,7 +46,20 @@ class DataAccessorTest extends TestCase
         $accessor = new DataAccessor($subject);
 
         $result = $accessor->set('string-val', 'New string');
-        $this->assertEquals(['string-val' => 'New string', 'null-val' => null], $result);
+        $this->assertEquals([
+            'string-val' => 'New string',
+            'null-val' => null,
+        ], $result);
+        $result = $accessor->set('object-val/string-val-2', 'Yet another string');
+        $this->assertEquals([
+            'string-val' => 'New string',
+            'null-val' => null,
+            'object-val' => [
+                'string-val-2' => 'Yet another string',
+            ],
+        ], $result);
+        $this->assertEquals('New string', $accessor->get('string-val'));
+        $this->assertEquals('Yet another string', $accessor->get('object-val/string-val-2'));
     }
 
     public function testObject(): void
@@ -66,5 +79,20 @@ class DataAccessorTest extends TestCase
         $clone = $accessor->set('public', 'Changed public');
         $this->assertNotSame($subject, $clone);
         $this->assertEquals('Changed public', $clone->public);
+    }
+
+    public function testCloning(): void
+    {
+        $subject = ['string-val' => 'A string', 'null-val' => null];
+        $accessor1 = new DataAccessor($subject);
+        $this->assertEquals('{"string-val":"A string","null-val":null}', json_encode($accessor1));
+        $accessor2 = clone $accessor1;
+        $this->assertEquals('{"string-val":"A string","null-val":null}', json_encode($accessor2));
+        $accessor1->set('string-val', 'New string');
+        $this->assertEquals('{"string-val":"New string","null-val":null}', json_encode($accessor1));
+        $this->assertEquals('{"string-val":"A string","null-val":null}', json_encode($accessor2));
+        $accessor2->set('string-val', 'Yet another string');
+        $this->assertEquals('{"string-val":"New string","null-val":null}', json_encode($accessor1));
+        $this->assertEquals('{"string-val":"Yet another string","null-val":null}', json_encode($accessor2));
     }
 }

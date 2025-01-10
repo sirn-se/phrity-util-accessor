@@ -1,8 +1,8 @@
 .gitattributes         export-ignore
+.github                export-ignore
 .gitignore             export-ignore
-docs/                  export-ignore
 Makefile               export-ignore
+phpcs.xml              export-ignore
 phpunit.xml            export-ignore
-psalm-baseline.xml     export-ignore
 README.md              export-ignore
 tests/                 export-ignore

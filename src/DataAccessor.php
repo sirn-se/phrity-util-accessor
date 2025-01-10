@@ -2,22 +2,24 @@
 
 namespace Phrity\Util;
 
+use JsonSerializable;
+
 /**
  * DataAccessor utility class.
  */
-class DataAccessor
+class DataAccessor implements JsonSerializable
 {
     use AccessorTrait;
 
     /**
      * @var mixed $data Data set
      */
-    protected $data;
+    protected mixed $data;
 
     /**
      * @var string $separator Separator
      */
-    protected $separator;
+    protected string $separator;
 
     /**
      * Constructor for this class.
@@ -59,6 +61,12 @@ class DataAccessor
      */
     public function set(string $path, mixed $value): mixed
     {
-        return $this->accessorSet($this->data, $this->accessorParsePath($path, $this->separator), $value);
+        $this->data = $this->accessorSet($this->data, $this->accessorParsePath($path, $this->separator), $value);
+        return $this->data;
+    }
+
+    public function jsonSerialize(): mixed
+    {
+        return $this->data;
     }
 }
