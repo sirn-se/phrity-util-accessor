@@ -36,8 +36,8 @@ class DataAccessorTest extends TestCase
             ],
         ];
         $accessor = new DataAccessor($subject);
-        $this->assertTrue($accessor->has('string-val', 'string-val'));
-        $this->assertTrue($accessor->has('object-val/string-val-2', 'string-val'));
+        $this->assertTrue($accessor->has('string-val'));
+        $this->assertTrue($accessor->has('object-val/string-val-2'));
     }
 
     public function testSet(): void

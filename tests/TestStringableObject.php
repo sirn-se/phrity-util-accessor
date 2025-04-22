@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Phrity\Util\Test;
 
+use Stringable;
+
 /**
- * Test class.
+ * Stringable test class.
  */
-class TestObject
+class TestStringableObject implements Stringable
 {
     public string $public = 'public';
     protected string $protected = 'protected';
@@ -17,4 +19,9 @@ class TestObject
     protected static string $sprotected = 'static-protected';
     /* @phpstan-ignore property.onlyWritten */
     private static string $sprivate = 'static-private';
+
+    public function __toString(): string
+    {
+        return 'Stringable test class';
+    }
 }

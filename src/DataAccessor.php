@@ -3,6 +3,7 @@
 namespace Phrity\Util;
 
 use JsonSerializable;
+use Phrity\Util\Transformer\TransformerInterface;
 
 /**
  * DataAccessor utility class.
@@ -17,30 +18,33 @@ class DataAccessor implements JsonSerializable
     protected mixed $data;
 
     /**
-     * @var string $separator Separator
+     * @var non-empty-string $separator Separator
      */
     protected string $separator;
 
     /**
      * Constructor for this class.
      * @param mixed $data Data set to access
-     * @param string $separator Separator
+     * @param non-empty-string $separator Separator
+     * @param TransformerInterface|null $transformer Transformer
      */
-    public function __construct(mixed $data, string $separator = '/')
+    public function __construct(mixed $data, string $separator = '/', TransformerInterface|null $transformer = null)
     {
         $this->data = $data;
         $this->separator = $separator;
+        $this->accessorTransformer = $transformer;
     }
 
     /**
      * Get specified content from data set.
      * @param string $path Path to access
      * @param mixed $default Default value
+     * @param string|null $coerce Optional type coercion
      * @return mixed Specified content of data set
      */
-    public function get(string $path, mixed $default = null): mixed
+    public function get(string $path, mixed $default = null, string|null $coerce = null): mixed
     {
-        return $this->accessorGet($this->data, $this->accessorParsePath($path, $this->separator), $default);
+        return $this->accessorGet($this->data, $this->accessorParsePath($path, $this->separator), $default, $coerce);
     }
 
     /**

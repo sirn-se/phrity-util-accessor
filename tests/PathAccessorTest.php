@@ -16,10 +16,10 @@ class PathAccessorTest extends TestCase
     {
         $accessor = new PathAccessor('string-val');
         $subject_1 = ['string-val' => 'A string'];
-        $result = $accessor->get($subject_1, 'string-val', 'The default');
+        $result = $accessor->get($subject_1, 'The default');
         $this->assertEquals('A string', $result);
         $subject_2 = ['string-val' => 'Another string'];
-        $result = $accessor->get($subject_2, 'string-val', 'The default');
+        $result = $accessor->get($subject_2, 'The default');
         $this->assertEquals('Another string', $result);
     }
 
@@ -27,9 +27,9 @@ class PathAccessorTest extends TestCase
     {
         $accessor = new PathAccessor('string-val');
         $subject_1 = ['string-val' => 'A string'];
-        $this->assertTrue($accessor->has($subject_1, 'string-val'));
+        $this->assertTrue($accessor->has($subject_1));
         $subject_2 = ['string-val' => 'Another string'];
-        $this->assertTrue($accessor->has($subject_2, 'string-val'));
+        $this->assertTrue($accessor->has($subject_2));
     }
 
     public function testSet(): void
