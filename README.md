@@ -64,6 +64,48 @@ $accessor->get($subject, 'non-existing'); // => null
 $accessor->get($subject, 'non-existing', 'My default'); // => "My default"
 ```
 
+## Using type coercion with `get()` method
+
+The `get()` method may coerce returned value into specified type.
+
+```php
+use Phrity\Util\Accessor;
+use Phrity\Util\Transformer\Type;
+
+$subject = [
+    'float-val' => 12.34,
+    'assoc-array-val' => [
+        'string-val' => 'Another string',
+    ],
+];
+
+$accessor = new Accessor();
+
+$accessor->get($subject, 'float-val', coerce: Type::STRING); // Return flaot as string
+$accessor->get($subject, 'assoc-array-val', coerce: Type::OBJECT); // Return array as object
+```
+
+By default the Accessor will use basic conversion.
+For more options, [Transformers](https://github.com/sirn-se/phrity-util-transformer) can be specified on Accessors.
+
+```php
+use Phrity\Util\Accessor;
+use Phrity\Util\Transformer\{
+    FirstMatchResolver,
+    EnumConverter,
+    StringableConverter,
+    BasicTypeConverter,
+};
+
+$transformer = new FirstMatchResolver([
+    new EnumConverter(),
+    new StringableConverter(),
+    new BasicTypeConverter(),
+]);
+$accessor = new Accessor(transformer: $transformer);
+```
+
+
 ## The `set()` method
 
 The `set()` method add or replace value in data set as specified by path.
@@ -188,5 +230,6 @@ class MyClass
 
 | Version | PHP | |
 | --- | --- | --- |
+| `1.2` | `^8.1` | Type coercion using Transformers |
 | `1.1` | `^8.0` | `set()` method |
 | `1.0` | `^7.4\|^8.0` | Initial version: `get()`, `has()` methods |

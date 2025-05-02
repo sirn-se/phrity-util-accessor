@@ -2,6 +2,8 @@
 
 namespace Phrity\Util;
 
+use Phrity\Util\Transformer\TransformerInterface;
+
 /**
  * Accessor utility class.
  */
@@ -10,17 +12,19 @@ class Accessor
     use AccessorTrait;
 
     /**
-     * @var string $separator Separator
+     * @var non-empty-string $separator Separator
      */
     protected string $separator;
 
     /**
      * Constructor for this class.
-     * @param string $separator Separator
+     * @param non-empty-string $separator Separator
+     * @param TransformerInterface|null $transformer Transformer
      */
-    public function __construct(string $separator = '/')
+    public function __construct(string $separator = '/', TransformerInterface|null $transformer = null)
     {
         $this->separator = $separator;
+        $this->accessorTransformer = $transformer;
     }
 
     /**
@@ -28,11 +32,12 @@ class Accessor
      * @param mixed $data Data set to access
      * @param string $path Path to access
      * @param mixed $default Default value
+     * @param string|null $coerce Optional type coercion
      * @return mixed Specified content of data set
      */
-    public function get(mixed $data, string $path, mixed $default = null): mixed
+    public function get(mixed $data, string $path, mixed $default = null, string|null $coerce = null): mixed
     {
-        return $this->accessorGet($data, $this->accessorParsePath($path, $this->separator), $default);
+        return $this->accessorGet($data, $this->accessorParsePath($path, $this->separator), $default, $coerce);
     }
 
     /**
