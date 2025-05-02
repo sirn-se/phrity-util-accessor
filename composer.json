@@ -23,7 +23,8 @@
         }
     },
     "require": {
-        "php": "^8.1"
+        "php": "^8.1",
+        "phrity/util-transformer": "^1.0"
     },
     "require-dev": {
         "php-coveralls/php-coveralls": "^2.0",
