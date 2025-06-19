@@ -1,3 +1,5 @@
+<p align="center"><img src="docs/logotype.png" alt="Phrity Util Accessor" width="100%"></p>
+
 [![Build Status](https://github.com/sirn-se/phrity-util-accessor/actions/workflows/acceptance.yml/badge.svg)](https://github.com/sirn-se/phrity-util-accessor/actions)
 [![Coverage Status](https://coveralls.io/repos/github/sirn-se/phrity-util-accessor/badge.svg?branch=main)](https://coveralls.io/github/sirn-se/phrity-util-accessor?branch=main)
 
@@ -230,6 +232,7 @@ class MyClass
 
 | Version | PHP | |
 | --- | --- | --- |
-| `1.2` | `^8.1` | Type coercion using Transformers |
+| `1.3` | `^8.1` | Type coercion using Transformers |
+| `1.2` | `^8.1` | DataAccessor implements JsonSerializable |
 | `1.1` | `^8.0` | `set()` method |
 | `1.0` | `^7.4\|^8.0` | Initial version: `get()`, `has()` methods |
