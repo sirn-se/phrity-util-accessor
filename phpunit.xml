@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    bootstrap="vendor/autoload.php"
+    bootstrap="tests/bootstrap.php"
     colors="true"
     xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd"
     displayDetailsOnIncompleteTests="true"
@@ -11,14 +11,15 @@
     displayDetailsOnTestsThatTriggerNotices="true"
     displayDetailsOnTestsThatTriggerWarnings="true"
 >
-    <testsuites>
-        <testsuite name="Phrity tests">
-            <directory>./tests/</directory>
-        </testsuite>
-    </testsuites>
-    <source>
-        <include>
-            <directory suffix=".php">./src/</directory>
-        </include>
-    </source>
+  <coverage/>
+  <testsuites>
+    <testsuite name="Unit tests">
+      <directory suffix=".php">tests/suites/</directory>
+    </testsuite>
+  </testsuites>
+  <source>
+    <include>
+      <directory suffix=".php">src/</directory>
+    </include>
+  </source>
 </phpunit>
