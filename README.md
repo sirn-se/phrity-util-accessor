@@ -83,7 +83,7 @@ $subject = [
 
 $accessor = new Accessor();
 
-$accessor->get($subject, 'float-val', coerce: Type::STRING); // Return flaot as string
+$accessor->get($subject, 'float-val', coerce: Type::STRING); // Return float as string
 $accessor->get($subject, 'assoc-array-val', coerce: Type::OBJECT); // Return array as object
 ```
 
